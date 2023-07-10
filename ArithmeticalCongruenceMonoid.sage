@@ -135,10 +135,10 @@ class ArithmeticalCongruenceMonoid:
 		return list_plot(plot_list)
 	
 	def LengthSet(self, num):
-		return list(sorted(uniq([len(f) for f in self.Factorizations(num)])))
+		return list(sorted(set([len(f) for f in self.Factorizations(num)])))
 	
 	def DeltaSet(self, num):
-		return list(sorted(uniq(DeltaListFromList(self.LengthSet(num)))))
+		return list(sorted(set(DeltaListFromList(self.LengthSet(num)))))
 	
 	def MaxFactorizationLength(self,num):
 		# finds the max factorization length of a given element
