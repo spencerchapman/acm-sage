@@ -56,7 +56,7 @@ class ArithmeticalCongruenceMonoid:
 		self.a = a % b
 		
 		self.__factorizations = {1:[[]]}
-		self.__irreducibles = set()
+		self.__irreducibles = {}
 
 	def __closedDivisors(self, num):
 		return [i for i in IntegerDivisors(num) if i in self and num/i in self]
@@ -77,7 +77,9 @@ class ArithmeticalCongruenceMonoid:
 							self.__factorizations[d].append(f + [s])
 			if(len(self.__factorizations[d]) == 0):
 				self.__factorizations[d] = [[d]]
-				self.__irreducibles = self.__irreducibles | {d}
+				self.__irreducibles[d] = True
+			else:
+				self.__irreducibles[d] = False
 		return self.__factorizations[num]
 	def NumberOfFactorizations(self, num):
 		return len(self.Factorizations(num))
