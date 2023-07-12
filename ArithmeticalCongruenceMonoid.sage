@@ -56,39 +56,32 @@ class ArithmeticalCongruenceMonoid:
 		self.a = a % b
 		
 		self.__factorizations = {1:[[]]}
-		self.__irreducibles = {}
-	
+		self.__irreducibles = set()
+
+	def __closedDivisors(self, num):
+		return [i for i in IntegerDivisors(num) if i in self and num/i in self]
 	def Factorizations(self, num):
-		if num in self.__factorizations: 
+		if num in self.__factorizations:
 			return self.__factorizations[num]
-		
-		# removes all numbers not divisors in the monoid
-		divisors = [i for i in IntegerDivisors(num) if i in self and num/i in self]
-		
-		#runs the recursive program to find list of factorizations 
-		return self.__ACMfactor(num, divisors)
-	
-	def __ACMfactor(self, num, divisors):
-		# Magical recursive program that builds lists of factorizations by tree. It
-		# builds from bottom up, adding factors at each branch. Just trust that it works. I checked
-		if num in self.__factorizations: 
-			return self.__factorizations[num]
-		
-		self.__factorizations[num] = []
-		for f in divisors[1:]:
-			if num/f in divisors and ((num/f == 1 and len(self.__factorizations[num]) == 0) or len(self.__ACMfactor(f, divisors)[0]) == 1):
-				smallerfactors = []
-				smallerfactors = deepcopy(self.__ACMfactor(num/f, divisors))
-				for k in range(len(smallerfactors)):
-					if smallerfactors[k] == [] or f >= smallerfactors[k][-1]:
-						smallerfactors[k].append(f)
-						self.__factorizations[num] = self.__factorizations[num] + [smallerfactors[k]]
-		
+		divisors = sorted(self.__closedDivisors(num))
+		for d in divisors:
+			if d in self.__factorizations:
+				continue
+			self.__factorizations[d] = []
+			for s in divisors:
+				if(s >= d):
+					break
+				if(s in self.__irreducibles and d/s in self):
+					for f in self.__factorizations[(d/s)]:
+						if(s >= f[-1]):
+							self.__factorizations[d].append(f + [s])
+			if(len(self.__factorizations[d]) == 0):
+				self.__factorizations[d] = [[d]]
+				self.__irreducibles = self.__irreducibles | {d}
 		return self.__factorizations[num]
-	
 	def NumberOfFactorizations(self, num):
 		return len(self.Factorizations(num))
-	
+
 	def FactorizationsUpToElement(self, nmax):
 		# Finds all arithmetic factorizations up to a certain element. Useful to run before long calculations
 		for i in range(self.a, nmax + 1, self.b):
@@ -165,7 +158,7 @@ class ArithmeticalCongruenceMonoid:
 		return (self.a, self.b) != (other.a, other.b)
 	
 	def __contains__(self, other):
-		return other == 1 or other % self.b == self.a
+		return int(other) == other and (other == 1 or other % self.b == self.a)
 	
 	def __repr__(self):
 		return "Arithmetical Congruence Monoid " + str((self.a, self.b))
