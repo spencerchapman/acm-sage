@@ -57,6 +57,7 @@ class ArithmeticalCongruenceMonoid:
 		
 		self.__factorizations = {1:[[]]}
 		self.__irreducibles = {}
+		self.__lengthsets = {1:[0]}
 
 	def __closedDivisors(self, num):
 		return [i for i in IntegerDivisors(num) if i in self and num/i in self]
@@ -130,8 +131,26 @@ class ArithmeticalCongruenceMonoid:
 		return list_plot(plot_list)
 	
 	def LengthSet(self, num):
-		return list(sorted(set([len(f) for f in self.Factorizations(num)])))
-	
+		if num in self.__lengthsets:
+			return self.__lengthsets[num]
+		divisors = sorted(self.__closedDivisors(num))
+		for d in divisors:
+			if d in self.__lengthsets:
+				continue
+			self.__lengthsets[d] = []
+			for s in divisors:
+				if( s >= d):
+					break
+				if(s in self.__irreducibles and d/s in self):
+					for l in self.__lengthsets[(d/s)]:
+						self.__lengthsets[d].append(l + 1)
+			if(len(self.__lengthsets[d]) == 0):
+				self.__lengthsets[d] = [1]
+				self.__irreducibles[d] = True
+			else:
+				self.__irreducibles[d] = False
+			self.__lengthsets[d] = list(set(self.__lengthsets[d]))
+		return self.__lengthsets[num]
 	def DeltaSet(self, num):
 		return list(sorted(set(DeltaListFromList(self.LengthSet(num)))))
 	
