@@ -56,7 +56,7 @@ class ArithmeticalCongruenceMonoid:
 		self.a = a % b
 		
 		self.__factorizations = {1:[[]]}
-		self.__irreducibles = {}
+		self.__irreducibles = {1:False}
 		self.__lengthsets = {1:[0]}
 
 	def __closedDivisors(self, num):
