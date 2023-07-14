@@ -141,7 +141,7 @@ class ArithmeticalCongruenceMonoid:
 			for s in divisors:
 				if( s >= d):
 					break
-				if(s in self.__irreducibles and d/s in self):
+				if(self.__irreducibles[s] and d/s in self):
 					for l in self.__lengthsets[(d/s)]:
 						self.__lengthsets[d].append(l + 1)
 			if(len(self.__lengthsets[d]) == 0):
