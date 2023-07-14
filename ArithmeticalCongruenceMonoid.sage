@@ -72,7 +72,7 @@ class ArithmeticalCongruenceMonoid:
 			for s in divisors:
 				if(s >= d):
 					break
-				if(s in self.__irreducibles and d/s in self):
+				if(self.__irreducibles[s] and d/s in self):
 					for f in self.__factorizations[(d/s)]:
 						if(s >= f[-1]):
 							self.__factorizations[d].append(f + [s])
