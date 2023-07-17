@@ -42,12 +42,12 @@ class ArithmeticalCongruenceMonoid:
 	def Factorizations(self, num):
 		if num in self.__factorizations:
 			return self.__factorizations[num]
-		divisors = divisors(num)
-		for d in divisors:
+		divs = divisors(num)
+		for d in divs:
 			if d in self.__factorizations:
 				continue
 			self.__factorizations[d] = []
-			for s in divisors:
+			for s in divs:
 				if(s >= d):
 					break
 				if(self.__irreducibles[s] and d/s in self):
@@ -80,9 +80,9 @@ class ArithmeticalCongruenceMonoid:
 			return max(self.LengthSet(num)) == 1
 		
 		# removes all numbers not divisors in the monoid
-		divisors = [i for i in IntegerDivisors(num) if i in self and num/i in self]
+		divs = [i for i in IntegerDivisors(num) if i in self and num/i in self]
 		
-		self.__irreducibles[num] = (len(divisors) <= 2)
+		self.__irreducibles[num] = (len(divs) <= 2)
 		return self.__irreducibles[num]
 	
 	def IrreduciblesUpToElement(self,nmax):
@@ -111,12 +111,12 @@ class ArithmeticalCongruenceMonoid:
 	def LengthSet(self, num):
 		if num in self.__lengthsets:
 			return self.__lengthsets[num]
-		divisors = divisors(num)
-		for d in divisors:
+		divs = divisors(num)
+		for d in divs:
 			if d in self.__lengthsets:
 				continue
 			self.__lengthsets[d] = []
-			for s in divisors:
+			for s in divs:
 				if( s >= d):
 					break
 				if(self.__irreducibles[s] and d/s in self):
