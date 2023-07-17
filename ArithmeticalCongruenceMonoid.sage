@@ -165,7 +165,10 @@ class ArithmeticalCongruenceMonoid:
 	def MaxFactorizationLength(self,num):
 		# finds the max factorization length of a given element
 		return max(self.LengthSet(num))
-	
+	def TMaxFactorizationLength(self,num,t):
+		return max(self.TLengthSet(num,t))
+	def TMinFactorizationLength(self,num,t):
+		return min(self.TLengthSet(num,t))
 	def MinFactorizationLength(self,num):
 		# finds the min factorization length of a given element
 		return min(self.LengthSet(num))
