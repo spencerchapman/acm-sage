@@ -25,7 +25,7 @@
 #####################################################################################
 
 import itertools
-import collections import Counter
+from collections import Counter
 
 def IntegerDivisors(num):
 	# Builds lists of possible divisors by all possible combinations of each prime factor
