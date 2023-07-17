@@ -26,26 +26,6 @@
 
 import itertools
 from collections import Counter
-
-def IntegerDivisors(num):
-	# Builds lists of possible divisors by all possible combinations of each prime factor
-	factorization = factor(num)
-	ret = [1]
-	
-	for i in range(len(factorization)):
-		B = []
-		for j in range(1,factorization[i][1]+1):
-			for k in ret:
-				B.append(k*(factorization[i][0])^j)
-		ret = ret + B
-	
-	return ret
-
-def DeltaListFromList(l):
-	return [l[i+1] - l[i] for i in range(len(l)-1)]
-
-
-
 class ArithmeticalCongruenceMonoid:
 	
 	def __init__(self, a, b):
@@ -59,12 +39,10 @@ class ArithmeticalCongruenceMonoid:
 		self.__irreducibles = {1:False}
 		self.__lengthsets = {1:[0]}
 
-	def __closedDivisors(self, num):
-		return [i for i in IntegerDivisors(num) if i in self and num/i in self]
 	def Factorizations(self, num):
 		if num in self.__factorizations:
 			return self.__factorizations[num]
-		divisors = sorted(self.__closedDivisors(num))
+		divisors = divisors(num)
 		for d in divisors:
 			if d in self.__factorizations:
 				continue
@@ -133,7 +111,7 @@ class ArithmeticalCongruenceMonoid:
 	def LengthSet(self, num):
 		if num in self.__lengthsets:
 			return self.__lengthsets[num]
-		divisors = sorted(self.__closedDivisors(num))
+		divisors = divisors(num)
 		for d in divisors:
 			if d in self.__lengthsets:
 				continue
