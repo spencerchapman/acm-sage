@@ -154,7 +154,7 @@ class ArithmeticalCongruenceMonoid:
 	
 	def DeltaSet(self, num):
 		return list(sorted(set(DeltaListFromList(self.LengthSet(num)))))
-	def LengthSet(self,num,t):
+	def TLengthSet(self,num,t):
 		if t == 1:
 			return self.LengthSet(num)
 		if t == 0:
