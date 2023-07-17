@@ -42,7 +42,7 @@ class ArithmeticalCongruenceMonoid:
 	def Factorizations(self, num):
 		if num in self.__factorizations:
 			return self.__factorizations[num]
-		divs = divisors(num)
+		divs = [i for i in divisors(num) if i in self and num/i in self]
 		for d in divs:
 			if d in self.__factorizations:
 				continue
