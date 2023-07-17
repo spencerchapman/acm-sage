@@ -172,10 +172,6 @@ class ArithmeticalCongruenceMonoid:
 	def MinFactorizationLength(self,num):
 		# finds the min factorization length of a given element
 		return min(self.LengthSet(num))
-	def MaxFactorizationLength(self,num,t):
-		return max(self.LengthSet(num,t))
-	def MinFactorizationLength(self,num,t):
-		return min(self.LengthSet(num,t))
 	def Elasticity(self,num):
 		# finds elasticity of an element: max factorization length / min...
 		if num == 1:
