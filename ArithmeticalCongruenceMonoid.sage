@@ -151,9 +151,17 @@ class ArithmeticalCongruenceMonoid:
 				self.__irreducibles[d] = False
 			self.__lengthsets[d] = list(set(self.__lengthsets[d]))
 		return self.__lengthsets[num]
+	
 	def DeltaSet(self, num):
 		return list(sorted(set(DeltaListFromList(self.LengthSet(num)))))
-	
+	def LengthSet(self,num,t):
+		if t == 1:
+			return self.LengthSet(num)
+		if t == 0:
+			return set(len(set(F)) for F in self.Factorizations(num))
+		if t == oo:
+			return set(Counter(F).most_common()[0][1] for F in self.Factorizations(num))
+		print('ERR: t value not implemented, defaulting to t = 1')
 	def MaxFactorizationLength(self,num):
 		# finds the max factorization length of a given element
 		return max(self.LengthSet(num))
@@ -161,7 +169,10 @@ class ArithmeticalCongruenceMonoid:
 	def MinFactorizationLength(self,num):
 		# finds the min factorization length of a given element
 		return min(self.LengthSet(num))
-	
+	def MaxFactorizationLength(self,num,t):
+		return max(self.LengthSet(num,t))
+	def MinFactorizationLength(self,num,t):
+		return min(self.LengthSet(num,t))
 	def Elasticity(self,num):
 		# finds elasticity of an element: max factorization length / min...
 		if num == 1:
