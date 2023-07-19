@@ -76,7 +76,7 @@ class ArithmeticalCongruenceMonoid:
     def __ACMLengthSet(self, num):
         if num in self.__lengthsets:
             return self.__lengthsets[num]
-        divs = divisors(num)
+        divs = [i for i in divisors(num) if i in self and num / i in self]
         for d in divs:
             if d in self.__lengthsets:
                 continue
@@ -95,18 +95,19 @@ class ArithmeticalCongruenceMonoid:
             self.__lengthsets[d] = list(set(self.__lengthsets[d]))
         return self.__lengthsets[num]
 
-    def MaxFactorizationLength(self, num,t=None):
+    def MaxFactorizationLength(self, num, t=None):
         # finds the max factorization length of a given element
-        return max(self.LengthSet(num,t))
-    def MinFactorizationLength(self, num,t=None):
-        # finds the min factorization length of a given element
-        return min(self.LengthSet(num,t))
+        return max(self.LengthSet(num, t))
 
-    def Elasticity(self, num,t=None):
+    def MinFactorizationLength(self, num, t=None):
+        # finds the min factorization length of a given element
+        return min(self.LengthSet(num, t))
+
+    def Elasticity(self, num, t=None):
         # finds elasticity of an element: max factorization length / min...
         if num == 1:
             return 1
-        return float(self.MaxFactorizationLength(num,t)) / float(self.MinFactorizationLength(num,t))
+        return float(self.MaxFactorizationLength(num, t)) / float(self.MinFactorizationLength(num, t))
 
     @staticmethod
     def MonoidsForGivenB(b):
