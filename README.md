@@ -1,5 +1,5 @@
 # acm-sage
-A fork of [acm-sage]('https://github.com/coneill-math/acm-sage').
+A fork of [acm-sage](https://github.com/coneill-math/acm-sage).
 ## Additional Features
 * Dynamic computation of factorizations
 * Factorization Length computation under various norms.
